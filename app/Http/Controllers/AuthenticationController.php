@@ -22,11 +22,12 @@ class AuthenticationController extends Controller
 
     private function respondWithToken($token)
     {
-        return response()->json([
-            "access_token" => $token,
-            "token_type" => "bearer",
-            "expires_in" => auth('api')->factory()->getTTL() * 60
-        ]);
+        return response()->cookie("jwt", "Bearer " . $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
+//        return response()->json([
+//            "access_token" => $token,
+//            "token_type" => "bearer",
+//            "expires_in" => auth('api')->factory()->getTTL() * 60
+//        ]);
     }
 
     public function register()
