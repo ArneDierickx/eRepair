@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use http\Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,8 @@ class AuthenticationController extends Controller
 
     private function respondWithToken($token)
     {
-        return response()->cookie("jwt", "Bearer " . $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
+        $cookie = cookie("jwt", "Bearer " . $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
+        return response()->cookie($cookie);
 //        return response()->json([
 //            "access_token" => $token,
 //            "token_type" => "bearer",
