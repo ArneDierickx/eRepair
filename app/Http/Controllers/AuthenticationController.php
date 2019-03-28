@@ -23,7 +23,7 @@ class AuthenticationController extends Controller
 
     private function respondWithToken($token)
     {
-//        $cookie = cookie("jwt", "Bearer " . $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
+//   TODO     $cookie = cookie("jwt", "Bearer " . $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
 //        return response("success")->cookie($cookie);
         return response()->json([
             "access_token" => $token,

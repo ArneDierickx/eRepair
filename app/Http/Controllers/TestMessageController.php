@@ -14,6 +14,8 @@ class TestMessageController extends Controller
      */
     public function index()
     {
+        // TODO return request()->user->username;
+        // Auth('api')::user->user
         return response()->json(["messages" => TestMessage::all()]);
     }
 
