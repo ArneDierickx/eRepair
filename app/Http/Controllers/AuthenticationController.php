@@ -23,7 +23,7 @@ class AuthenticationController extends Controller
 
     private function respondWithToken($token)
     {
-        $cookie = cookie("token", $token, auth("api")->factory()->getTTL(), "/", "eRepair.local", true, true);
+        $cookie = cookie("token", $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
         return response('')->cookie($cookie);
     }
 
