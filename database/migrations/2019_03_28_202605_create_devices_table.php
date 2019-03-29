@@ -19,12 +19,12 @@ class CreateDevicesTable extends Migration
             $table->enum('type', ['laptop', 'smartphone', 'other']);
             $table->string('status');
             $table->text('confirmation_desc')->nullable();
-            $table->string('username');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
 
         Schema::table('devices', function (Blueprint $table) {
-            $table->foreign('username')->references('username')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
