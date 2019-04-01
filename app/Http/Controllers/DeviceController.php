@@ -22,12 +22,12 @@ class DeviceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Device $device
+     * @param int id
      * @return \Illuminate\Http\Response
      */
-    public function show(Device $device)
+    public function show(int $id)
     {
-        //
+        return response()->json(Device::all('id', 'name', 'confirmation_desc')->where('id', $id));
     }
 
     /**
