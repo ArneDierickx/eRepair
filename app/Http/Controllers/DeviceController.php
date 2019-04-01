@@ -27,7 +27,10 @@ class DeviceController extends Controller
      */
     public function show(int $id)
     {
-        return response()->json(Device::all('id', 'name', 'confirmation_desc')->where('id', $id));
+        $user_id = auth('api')->user()->getAuthIdentifier();
+        $device = Device::all('id', 'name', 'confirmation_desc', 'user_id')->where('id', $id);
+        // only return devices belonging to the user
+        return response()->json($device->where('user_id', $user_id));
     }
 
     /**
