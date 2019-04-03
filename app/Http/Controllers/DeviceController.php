@@ -29,10 +29,10 @@ class DeviceController extends Controller
     {
         $user_id = auth('api')->user()->getAuthIdentifier();
         $device = Device::find($id);
-        if ($device->user_id == $user_id && $device->status == 'confirmation required') {
+        if ($device !== null && $device->user_id == $user_id && $device->status == 'confirmation required') {
             return response()->json($device);
         } else {
-            return response()->json("", 400);
+            return response()->json(["error" => "device not found"], 400);
         }
     }
 
@@ -40,24 +40,25 @@ class DeviceController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param int id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, int $id)
     {
-        $id = $request->json("id");
         $update = $request->json("update");
         $user_id = auth('api')->user()->getAuthIdentifier();
         $device = Device::find($id);
-        if ($device->user_id == $user_id && $device->status == 'confirmation required') {
+        if ($device != null && $device->user_id == $user_id && $device->status == 'confirmation required') {
             if ($update == "confirm") {
                 $device->status = "confirmation given";
             } elseif ($update == "deny") {
                 $device->status = "confirmation denied";
             } else {
-                return response()->json("", 400);
+                return response()->json(["error" => "invalid value for update"], 400);
             }
+            $device->save();
         } else {
-            return response()->json("", 400);
+            return response()->json(["error" => "device not found"], 400);
         }
 
         return response()->json("");
