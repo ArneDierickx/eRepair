@@ -45,7 +45,7 @@ class DeviceController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $update = $request->json("update");
+        $update = $request->post("update");
         $user_id = auth('api')->user()->getAuthIdentifier();
         $device = Device::find($id);
         if ($device != null && $device->user_id == $user_id && $device->status == 'confirmation required') {
