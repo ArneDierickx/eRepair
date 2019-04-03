@@ -16,7 +16,7 @@ class DeviceController extends Controller
     public function index()
     {
         $user_id = auth('api')->user()->getAuthIdentifier();
-        return response()->json(Device::all(['id', 'name', 'type', 'status', 'user_id'])->where('user_id', $user_id));
+        return response()->json(Device::where('user_id', '=', $user_id)->get());
     }
 
     /**
@@ -28,20 +28,38 @@ class DeviceController extends Controller
     public function show(int $id)
     {
         $user_id = auth('api')->user()->getAuthIdentifier();
-        $device = Device::all('id', 'name', 'status', 'confirmation_desc', 'user_id')->where('id', $id);
-        // only return devices belonging to the user and requiring confirmation
-        return response()->json($device->where('user_id', $user_id)->where('status', 'confirmation required'));
+        $device = Device::find($id);
+        if ($device->user_id == $user_id && $device->status == 'confirmation required') {
+            return response()->json($device);
+        } else {
+            return response()->json("", 400);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Device $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Device $device)
+    public function update(Request $request)
     {
-        //
+        $id = $request->json("id");
+        $update = $request->json("update");
+        $user_id = auth('api')->user()->getAuthIdentifier();
+        $device = Device::find($id);
+        if ($device->user_id == $user_id && $device->status == 'confirmation required') {
+            if ($update == "confirm") {
+                $device->status = "confirmation given";
+            } elseif ($update == "deny") {
+                $device->status = "confirmation denied";
+            } else {
+                return response()->json("", 400);
+            }
+        } else {
+            return response()->json("", 400);
+        }
+
+        return response()->json("");
     }
 }

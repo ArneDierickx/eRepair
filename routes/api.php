@@ -17,6 +17,5 @@ Route::post("/login", "AuthenticationController@login")->name("login");
 Route::post("/register", "AuthenticationController@register")->name("register");
 Route::post("/logout", "AuthenticationController@logout")->name("logout");
 
-//Route::middleware("jwt.auth")->get("/temptest", "TestMessageController@index")->name("test");
 Route::middleware("jwt.auth")->get("/devices", "DeviceController@index")->name("devices.get");
 Route::middleware("jwt.auth")->get("/devices/{id}", "DeviceController@show")->name("devices.show");
