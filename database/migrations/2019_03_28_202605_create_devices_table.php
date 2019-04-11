@@ -16,7 +16,7 @@ class CreateDevicesTable extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->enum('type', ['laptop', 'smartphone', 'other']);
+            $table->string('type');
             $table->string('status');
             $table->text('confirmation_desc')->nullable();
             $table->unsignedBigInteger('user_id');
@@ -25,6 +25,7 @@ class CreateDevicesTable extends Migration
 
         Schema::table('devices', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('type')->references('type')->on('types');
         });
     }
 
