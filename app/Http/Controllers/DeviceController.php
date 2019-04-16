@@ -56,6 +56,7 @@ class DeviceController extends Controller
             } else {
                 return response()->json(["error" => "invalid value for update"], 400);
             }
+            $device->confirmation_desc = null;
             $device->save();
         } else {
             return response()->json(["error" => "device not found"], 400);
