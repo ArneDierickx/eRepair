@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Contracts\Providers\JWT;
 
+// user model, modified to support JWT
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -58,6 +59,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    // encrypts password with bcrypt
     public function setPasswordAttribute($password)
     {
         if (!empty($password)) {

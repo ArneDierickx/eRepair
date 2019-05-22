@@ -7,6 +7,7 @@ use http\Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+// controller used for creating login tokens and registering
 class AuthenticationController extends Controller
 {
     public function login()
@@ -23,6 +24,7 @@ class AuthenticationController extends Controller
 
     private function respondWithToken($token)
     {
+        // return token as an http only cookie in an empty response
         $cookie = cookie("token", $token, auth("api")->factory()->getTTL(), "/", "arnedierickx.be", true, true);
         return response('')->cookie($cookie);
     }

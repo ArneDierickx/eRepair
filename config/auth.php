@@ -41,6 +41,7 @@ return [
             'provider' => 'users',
         ],
 
+        // using jwt as api auth driver
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',

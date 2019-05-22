@@ -1,5 +1,7 @@
 <?php
 
+// CORS: allow all
+
 return [
 
     /*
@@ -11,7 +13,8 @@ return [
     | to accept any value.
     |
     */
-   
+
+    // set to true to allow http only cookie containing token
     'supportsCredentials' => true,
     'allowedOrigins' => ['*'],
     'allowedOriginsPatterns' => [],
